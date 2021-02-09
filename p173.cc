@@ -34,26 +34,20 @@ private:
 class BSTIterator1 {
 public:
   BSTIterator1(TreeNode *root) {
-    if (root)
-      stack_.push_back(root);
     // 找到当前的最小值, 并记录访问路径.
-    while (root->left != nullptr) {
-      root = root->left;
+    while (root != nullptr) {
       stack_.push_back(root);
+      root = root->left;
     }
   }
 
   int next() {
     TreeNode *top = stack_.back();
     stack_.pop_back();
-    TreeNode *right = top->right;
-    if (right != nullptr) {
-      stack_.push_back(right);
-      TreeNode *left = right->left;
-      while (left != nullptr) {
-        stack_.push_back(left);
-        left = left->left;
-      }
+    TreeNode *root = top->right;
+    while (root != nullptr) {
+      stack_.push_back(root);
+      root = root->left;
     }
     return top->val;
   }
