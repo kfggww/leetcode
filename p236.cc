@@ -48,3 +48,42 @@ private:
     path.pop_back();
   }
 };
+
+/**
+ * @brief 递归求解.
+ *
+ */
+class Solution2 {
+
+public:
+  TreeNode *lowestCommonAncestor(TreeNode *root, TreeNode *p, TreeNode *q) {
+    dfs(root, p, q);
+    return ans;
+  }
+
+private:
+  /**
+   * @brief 当root中包含p或者q时, 返回true
+   *
+   * @param root
+   * @param p
+   * @param q
+   * @return true
+   * @return false
+   */
+  bool dfs(TreeNode *root, TreeNode *p, TreeNode *q) {
+    if (root == nullptr)
+      return false;
+
+    bool lson = dfs(root->left, p, q);
+    bool rson = dfs(root->right, p, q);
+
+    // 记录答案
+    if ((lson && rson) || ((root == p || root == q) && (lson || rson)))
+      ans = root;
+    return (lson || rson) || (root == p || root == q);
+  }
+
+private:
+  TreeNode *ans;
+};
