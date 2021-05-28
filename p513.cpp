@@ -1,11 +1,3 @@
-/*
- * @lc app=leetcode.cn id=513 lang=cpp
- *
- * [513] 找树左下角的值
- */
-
-// @lc code=start
-
 #include "tree_node.h"
 #include <list>
 
@@ -74,5 +66,3 @@ public:
     return target->val;
   }
 };
-
-// @lc code=end
