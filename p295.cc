@@ -15,44 +15,44 @@ using std::vector;
 class MedianFinder {
 public:
   /** initialize your data structure here. */
-  MedianFinder() {}
+  MedianFinder() : _total(0) {}
 
   void addNum(int num) {
     if (_recorder.find(num) != _recorder.end())
       _recorder[num] += 1;
-    else
+    else {
       _recorder[num] = 1;
+      _keys.push_back(num);
+    }
+
+    _total += 1;
   }
 
   double findMedian() {
-    vector<int> keys;
-    int total = 0;
-    for (auto itr = _recorder.cbegin(); itr != _recorder.cend(); itr++) {
-      keys.push_back(itr->first);
-      total += itr->second;
-    }
-    std::sort(keys.begin(), keys.end());
+    std::sort(_keys.begin(), _keys.end());
 
-    if (total % 2 == 0) {
-      double val1 = getNthValue(keys, total / 2);
-      double val2 = getNthValue(keys, total / 2 + 1);
+    if (_total % 2 == 0) {
+      double val1 = getNthValue(_total / 2);
+      double val2 = getNthValue(_total / 2 + 1);
       return 0.5 * (val1 + val2);
     } else
-      return getNthValue(keys, (total + 1) / 2);
+      return getNthValue((_total + 1) / 2);
   }
 
 private:
-  int getNthValue(vector<int> &keys, const int &N) {
+  int getNthValue(const int &N) {
     int cur_total = 0;
     int index = 0;
     while (cur_total < N) {
-      cur_total += _recorder[keys[index++]];
+      cur_total += _recorder[_keys[index++]];
     }
-    return keys[index - 1];
+    return _keys[index - 1];
   }
 
 private:
   map<int, int> _recorder;
+  vector<int> _keys;
+  int _total;
 };
 
 /**
