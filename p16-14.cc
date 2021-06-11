@@ -1,5 +1,5 @@
-#include <vector>
 #include <iostream>
+#include <vector>
 
 using std::cout;
 using std::endl;
@@ -49,18 +49,20 @@ private:
     for (int after_index = 0; after_index < this->points.size();
          ++after_index) {
       if (before_index != after_index && marked[after_index] != 1) {
-        marked[after_index] = 1;
 
         if (add_point_to(points[before_index], before_index,
-                         points[after_index], after_index, dx, dy, line))
+                         points[after_index], after_index, dx, dy, line)) {
+          marked[after_index] = 1;
           line_of(after_index, line, dx, dy);
-
+        }
         // 还原
         line = old_line;
         dx = old_dx;
         dy = old_dy;
       }
     }
+
+    this->marked[before_index] = 0;
   }
   // 加入一个点到当前直线
   bool add_point_to(vector<int> &point_before, int i, vector<int> &point_after,
@@ -120,9 +122,8 @@ private:
   struct Line ans;
 };
 
-
 int main() {
-  vector<vector<int>> points = {{1,1},{1,0},{2,0}, {0,0}};
+  vector<vector<int>> points = {{1, 1}, {1, 0}, {2, 0}, {0, 0}};
   vector<int> ans;
   Solution s;
   ans = s.bestLine(points);
