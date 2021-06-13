@@ -122,12 +122,55 @@ private:
   struct Line ans;
 };
 
+
+/*
+ * 思路: 枚举全部的直线, 分别计算每条直线通过的点的个数, 同时在枚举时有剪枝策略.
+ *
+ *
+ */
+class Solution1 {
+
+  public:
+    vector<int> bestLine(vector<vector<int>> &points) {
+      int first_index = 0;
+      int second_index = 1;
+      int count = 2;
+
+      auto SIZE = points.size();
+
+      for(int i = 0; i < SIZE; ++i) {
+        for(int j = i + 1; j < SIZE && SIZE >= count - 1 + j; ++j) {
+          int tmp_count = 2;
+          long dx = points[j][0] - points[i][0];
+          long dy = points[j][1] - points[i][1];
+          for(int k = j + 1; k < SIZE; ++k) {
+            if(dx * (points[k][1] - points[j][1]) == dy * (points[k][0] - points[j][0]))
+              tmp_count++;
+          }
+
+          if(tmp_count > count) {
+            first_index = i;
+            second_index = j;
+            count = tmp_count;
+          }
+        }
+      }
+
+      return {first_index, second_index};
+    }
+
+};
+
 int main() {
   vector<vector<int>> points = {{1, 1}, {1, 0}, {2, 0}, {0, 0}};
   vector<int> ans;
   Solution s;
   ans = s.bestLine(points);
-
   cout << ans[0] << ", " << ans[1] << endl;
+
+  Solution1 s1;
+  ans = s1.bestLine(points);
+  cout << ans[0] << ", " << ans[1] << endl;
+
   return 0;
 }
