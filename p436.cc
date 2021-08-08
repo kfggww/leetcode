@@ -7,22 +7,23 @@ using std::vector;
  * 暴力求解(TimeOut).
  */
 class Solution {
-public:
-  vector<int> findRightInterval(vector<vector<int>> &intervals) {
-    vector<int> res;
+  public:
+    vector<int> findRightInterval(vector<vector<int>> &intervals) {
+        vector<int> res;
 
-    for (int i = 0; i < intervals.size(); ++i) {
-      int index = -1;
-      for (int j = 0; j < intervals.size(); ++j) {
-        if (j != i && intervals[i][1] <= intervals[j][0]) {
-          index =
-              index == -1 || intervals[j][0] < intervals[index][0] ? j : index;
+        for (int i = 0; i < intervals.size(); ++i) {
+            int index = -1;
+            for (int j = 0; j < intervals.size(); ++j) {
+                if (j != i && intervals[i][1] <= intervals[j][0]) {
+                    index = index == -1 || intervals[j][0] < intervals[index][0]
+                                ? j
+                                : index;
+                }
+            }
+
+            res.push_back(index);
         }
-      }
 
-      res.push_back(index);
+        return res;
     }
-
-    return res;
-  }
 };

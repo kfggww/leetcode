@@ -7,56 +7,56 @@
  */
 
 class MyCircularQueue {
-public:
-  MyCircularQueue(int k)
-      : size(0), max_size(k), pData(nullptr), head(0), tail(0) {
-    pData = new int[k];
-  }
+  public:
+    MyCircularQueue(int k)
+        : size(0), max_size(k), pData(nullptr), head(0), tail(0) {
+        pData = new int[k];
+    }
 
-  ~MyCircularQueue() {
-    if (pData != nullptr)
-      delete[] pData;
-  }
+    ~MyCircularQueue() {
+        if (pData != nullptr)
+            delete[] pData;
+    }
 
-  bool enQueue(int value) {
-    if (size >= max_size)
-      return false;
-    *(pData + tail) = value;
-    ++size;
-    tail = (tail + 1) % max_size;
-    return true;
-  }
+    bool enQueue(int value) {
+        if (size >= max_size)
+            return false;
+        *(pData + tail) = value;
+        ++size;
+        tail = (tail + 1) % max_size;
+        return true;
+    }
 
-  bool deQueue() {
-    if (size <= 0)
-      return false;
-    head = (head + 1) % max_size;
-    --size;
-    return true;
-  }
+    bool deQueue() {
+        if (size <= 0)
+            return false;
+        head = (head + 1) % max_size;
+        --size;
+        return true;
+    }
 
-  int Front() {
-    if (size == 0)
-      return -1;
-    return *(pData + head);
-  }
+    int Front() {
+        if (size == 0)
+            return -1;
+        return *(pData + head);
+    }
 
-  int Rear() {
-    if (size == 0)
-      return -1;
-    return *(pData + (tail > 0 ? tail - 1 : max_size - 1));
-  }
+    int Rear() {
+        if (size == 0)
+            return -1;
+        return *(pData + (tail > 0 ? tail - 1 : max_size - 1));
+    }
 
-  bool isEmpty() { return size == 0; }
+    bool isEmpty() { return size == 0; }
 
-  bool isFull() { return size == max_size; }
+    bool isFull() { return size == max_size; }
 
-private:
-  int *pData;
-  int size;
-  int max_size;
-  int head;
-  int tail;
+  private:
+    int *pData;
+    int size;
+    int max_size;
+    int head;
+    int tail;
 };
 
 /**

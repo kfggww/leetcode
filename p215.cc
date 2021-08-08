@@ -10,19 +10,19 @@ using std::vector;
  * 思路: 用一个小顶堆, 维护k个元素, 最后堆顶元素即为所求.
  */
 class Solution {
-public:
-  int findKthLargest(vector<int> &nums, int k) {
-    priority_queue<int, vector<int>, std::greater<int>> heap;
+  public:
+    int findKthLargest(vector<int> &nums, int k) {
+        priority_queue<int, vector<int>, std::greater<int>> heap;
 
-    for (auto itr = nums.cbegin(); itr != nums.cend(); itr++) {
-      if (heap.size() < k) {
-        heap.push(*itr);
-      } else {
-        heap.push(*itr);
-        heap.pop();
-      }
+        for (auto itr = nums.cbegin(); itr != nums.cend(); itr++) {
+            if (heap.size() < k) {
+                heap.push(*itr);
+            } else {
+                heap.push(*itr);
+                heap.pop();
+            }
+        }
+
+        return heap.top();
     }
-
-    return heap.top();
-  }
 };

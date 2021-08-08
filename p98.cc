@@ -7,30 +7,30 @@
  */
 class Solution {
 
-public:
-  bool isValidBST(TreeNode *root) {
-    inOrder(root);
-    if (values.size() <= 1)
-      return true;
+  public:
+    bool isValidBST(TreeNode *root) {
+        inOrder(root);
+        if (values.size() <= 1)
+            return true;
 
-    for (int i = 0; i < values.size() - 1; ++i) {
-      if (values[i] >= values[i + 1])
-        return false;
+        for (int i = 0; i < values.size() - 1; ++i) {
+            if (values[i] >= values[i + 1])
+                return false;
+        }
+
+        return true;
     }
 
-    return true;
-  }
+  private:
+    void inOrder(TreeNode *root) {
+        if (root == nullptr)
+            return;
 
-private:
-  void inOrder(TreeNode *root) {
-    if (root == nullptr)
-      return;
+        inOrder(root->left);
+        values.push_back(root->val);
+        inOrder(root->right);
+    }
 
-    inOrder(root->left);
-    values.push_back(root->val);
-    inOrder(root->right);
-  }
-
-private:
-  std::vector<int> values;
+  private:
+    std::vector<int> values;
 };
