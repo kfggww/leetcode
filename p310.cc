@@ -1,6 +1,9 @@
 // 最小高度树
 // 思路: bfs或者dfs求某节点作为树根时的深度
-// TODO: 超时:P
+// TODO: 险过, 通过剔除掉dfs遍历中一些明显不可能是答案的情况减少遍历的次数,
+// 另一种思路是用空间换时间, 记录下重叠子问题的解, 碰到时直接查表,
+// 比如v1--v2--v3--v4, 在以v2或者v3作为根时,
+// dfs都需要计算v2到v1以及v3到v4的高度, 这就是重叠子问题
 
 #include <algorithm>
 #include <iostream>
@@ -16,13 +19,19 @@ class Solution {
   private:
     vector<vector<int>> graph;
     vector<int> marked;
+    int minHeight;
 
+  private:
     int dfs(vector<vector<int>> &g, int start, int &height) {
         if (marked[start] == 1)
             return height;
 
         height += 1;
         marked[start] = 1;
+
+        // 减枝
+        if (height > minHeight)
+            return height;
 
         int maxH = 0;
         for (auto next : graph[start]) {
@@ -64,7 +73,7 @@ class Solution {
             return {0};
 
         vector<int> res;
-        int minHeight = n + 1;
+        minHeight = n + 1;
 
         marked.resize(n, 0);
         graph.resize(n, vector<int>());
@@ -77,8 +86,8 @@ class Solution {
 
         for (int i = 0; i < n; ++i) {
             int height = 0;
-            // int currentMin = dfs(graph, i, height);
-            int currentMin = bfs(graph, i);
+            int currentMin = dfs(graph, i, height);
+            // int currentMin = bfs(graph, i);
 
             if (currentMin < minHeight) {
                 minHeight = currentMin;
